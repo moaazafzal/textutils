@@ -10,6 +10,7 @@ def index(request):
 def analyze(request):
     djtext=request.GET.get('text','default')
     isremove_pun=request.GET.get('removepunc','off')
+    uppercase=request.GET.get('capitilze','off')
     print(djtext)
     print(isremove_pun)
     analyzed=''
@@ -23,6 +24,14 @@ def analyze(request):
 
 
         return render(request,'analyze.html',params)
+    elif(uppercase=='on'):
+        analyzed=''
+        for char in djtext:
+          analyzed=analyzed+char.upper()
+        params={'purpose':'Capitalized ','analyzed_text':analyzed}
+        return render(request,'analyze.html',params)
+
+
     else:
         return HttpResponse("error")
 
