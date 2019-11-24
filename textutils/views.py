@@ -23,33 +23,35 @@ def analyze(request):
                 analyzed += char
 
         params={'purpose':'Removed Punctuations','analyzed_text':analyzed}
+        djtext=analyzed
 
 
-        return render(request,'analyze.html',params)
-    elif(uppercase=='on'):
+    #    return render(request,'analyze.html',params)
+    if(uppercase=='on'):
         analyzed=''
         for char in djtext:
           analyzed=analyzed+char.upper()
         params={'purpose':'Capitalized ','analyzed_text':analyzed}
-        return render(request,'analyze.html',params)
-    elif(removespace=="on"):
+        djtext = analyzed
+       # return render(request,'analyze.html',params)
+    if(removespace=="on"):
         analyzed=''
         for index, char in enumerate(djtext):
             if not(djtext[index]==" " and djtext [index+1]==" "):
                 analyzed+=char
         params={'purpose':'removespace','analyzed_text':analyzed}
-        return  render(request,'analyze.html',params)
-    elif(countwords=="on"):
+        djtext = analyzed
+      #  return  render(request,'analyze.html',params)
+    if(countwords=="on"):
      # print(str(len(djtext)) +'aaa')
      params={'purpose':'No of char are :','analyzed_text':len(djtext)}
-     return  render(request,'analyze.html',params)
+     djtext = analyzed
+     #return  render(request,'analyze.html',params)
 
+    if (removepunc != "on" and removespace != "on" and countwords != "on" and uppercase != "on"):
+        return HttpResponse("please select any operation and try again")
 
-
-
-
-    else:
-        return HttpResponse("error")
+    return render(request, 'analyze.html', params)
 
 def removepunc(request):
     return HttpResponse("remove punc")
