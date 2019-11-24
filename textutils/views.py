@@ -11,6 +11,8 @@ def analyze(request):
     djtext=request.GET.get('text','default')
     isremove_pun=request.GET.get('removepunc','off')
     uppercase=request.GET.get('capitilze','off')
+    removespace = request.GET.get('removespace', 'off')
+    countwords = request.GET.get('countwords', 'off')
     print(djtext)
     print(isremove_pun)
     analyzed=''
@@ -30,6 +32,20 @@ def analyze(request):
           analyzed=analyzed+char.upper()
         params={'purpose':'Capitalized ','analyzed_text':analyzed}
         return render(request,'analyze.html',params)
+    elif(removespace=="on"):
+        analyzed=''
+        for index, char in enumerate(djtext):
+            if not(djtext[index]==" " and djtext [index+1]==" "):
+                analyzed+=char
+        params={'purpose':'removespace','analyzed_text':analyzed}
+        return  render(request,'analyze.html',params)
+    elif(countwords=="on"):
+     # print(str(len(djtext)) +'aaa')
+     params={'purpose':'No of char are :','analyzed_text':len(djtext)}
+     return  render(request,'analyze.html',params)
+
+
+
 
 
     else:
